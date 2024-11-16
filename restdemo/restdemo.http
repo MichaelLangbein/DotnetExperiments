@@ -4,3 +4,7 @@ GET {{restdemo_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+
+GET {{restdemo_HostAddress}}/api/author/
+Accept: application/json
