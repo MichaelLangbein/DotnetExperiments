@@ -8,3 +8,20 @@ Accept: application/json
 
 GET {{restdemo_HostAddress}}/api/author/
 Accept: application/json
+
+###
+GET {{restdemo_HostAddress}}/api/author/1
+Accept: application/json
+
+
+###
+POST {{restdemo_HostAddress}}/api/author/
+Content-Type: application/json
+
+{
+    "name": "T.C. Boyle",
+    "books": [
+        { "name": "Water Music" },
+        { "name": "Other tales" }
+    ]
+}

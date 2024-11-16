@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
+using Repositories;
 
 namespace Controllers
 {
@@ -7,36 +9,40 @@ namespace Controllers
     [ApiController]
     public class AuthorController : ControllerBase
     {
+
+        private readonly Repository _ar;
+        public AuthorController(Repository ar)
+        {
+            _ar = ar;
+        }
+
         // GET: api/<AuthorController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Author> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _ar.GetAuthors();
         }
 
         // GET api/<AuthorController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Author Get(int id)
         {
-            return "value";
+            return _ar.GetAuthor(id);
         }
 
         // POST api/<AuthorController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] CreateAuthorDto author)
         {
+            var savedAuthor = _ar.CreateAuthor(author);
+            return CreatedAtAction(nameof(Get), new { id = savedAuthor.Id }, savedAuthor);
         }
 
-        // PUT api/<AuthorController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
 
-        // DELETE api/<AuthorController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        // // DELETE api/<AuthorController>/5
+        // [HttpDelete("{id}")]
+        // public void Delete(int id)
+        // {
+        // }
     }
 }
