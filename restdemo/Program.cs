@@ -8,7 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton(NHibernateHelper.SessionFactory);
 builder.Services.AddScoped(fac => fac.GetService<ISessionFactory>()!.OpenSession());
 builder.Services.AddScoped<Repository>();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
+        );  // makes sure that circular references in json-output are resolved
+
 // builder.Services.AddSingleton<BookRepo>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
